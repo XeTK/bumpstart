@@ -1,5 +1,5 @@
-const API_ENDPOINT_SERVERS = "http://127.0.0.1:5000/api/servers";
-const API_ENDPOINT_SERVER = "http://127.0.0.1:5000/api/server/";
+const API_ENDPOINT_SERVERS = "/api/servers";
+const API_ENDPOINT_SERVER = "/api/server/";
 
 const TABLE_ROW = (status, name, ip) => `
 <tr>
@@ -26,9 +26,7 @@ function on_power(event) {
         .then(data => alert("Changing state of " + server + ' to ' + new_state));
 }
 
-function add_server(server) {
-    let server_id = server.id;
-
+function add_server(server, server_id) {
     fetch(API_ENDPOINT_SERVER + server_id)
         .then(response => response.json())
         .then(data => {
@@ -52,8 +50,9 @@ function main() {
     fetch(API_ENDPOINT_SERVERS)
         .then(response => response.json())
         .then(data => { 
-            for (var server in data) 
-                add_server(data[server]);
+            for (var server in data) {
+                add_server(data[server], server);
+            }
         });
 }
 

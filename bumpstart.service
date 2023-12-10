@@ -1,0 +1,18 @@
+[Unit]
+Description=Bumpstart Service
+After=network.target
+
+[Service]
+Type=simple
+User=xetk
+Group=www-data
+PermissionsStartOnly=true
+Restart=on-failure
+WorkingDirectory=/home/xetk/bumpstart
+#Environment=FLASK_APP=./main.py
+#Environment=FLASK_CONFIG=production
+#ExecStart=/usr/bin/python3 -m flask run
+ExecStart=/usr/local/bin/uwsgi --ini bumpstart.ini
+
+[Install]
+WantedBy=multi-user.target
